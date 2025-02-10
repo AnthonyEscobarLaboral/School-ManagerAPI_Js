@@ -45,7 +45,6 @@ export const assignCoursesStudent = async (req, res) => {
 
 export const studentCourses = async (req, res) => {
     const { uid } = req.params
-    const query = { status: true };
 
     try {
         const user = await User.findById(uid).populate('Courses');
@@ -55,8 +54,6 @@ export const studentCourses = async (req, res) => {
                 message: "User not found"
             })
         }
-
-        const total = await User.countDocuments(query);
 
         res.status(200).json({
             success: true,

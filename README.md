@@ -20,10 +20,10 @@ forma automática.
 
 ## Endpoints de la API
 
-### Alumnos
+### AUTH
 
-- **Asignacion de cursos por alumno**
-  - **URL:** `/adoptionSystem/v1/auth/register`
+- **Registro de alumnos**
+  - **URL:** `/schoolManagement/v1/auth/registerStudent`
   - **Método:** `POST`
   - **Cuerpo:**
     ```json
@@ -31,10 +31,91 @@ forma automática.
       "name": "string",
       "surname": "string",
       "username": "string",
-      "email": "string",
-      "phone": "string",
       "password": "string",
-      "role": "string",
-      "profilePicture": "file"
+      "role": "string"
     }
     ```
+
+- **Registro de maestros**
+  - **URL:** `/schoolManagement/v1/auth/registerTeacher`
+  - **Método:** `POST`
+  - **Cuerpo:**
+    ```json
+    {
+      "name": "string",
+      "surname": "string",
+      "username": "string",
+      "password": "string",
+      "role": "string"
+    }
+    ```
+
+- **Inicio de sesion**
+  - **URL:** `/schoolManagement/v1/auth/login`
+  - **Método:** `POST`
+  - **Cuerpo:**
+    ```json
+    {
+      "username": "string",
+      "password": "string"
+    }
+    ```
+
+### STUDENTS
+- **Asignacion de cursos**
+  - **URL:** `/schoolManagement/v1/student/assignCourses/:uid`
+  - **Método:** `POST`
+  - **Cuerpo:**
+    ```json
+    {
+       "courses": ["curso1", "curso2", "curso3"]
+    }
+    ```
+
+- **lista de cursos por alumno**
+  - **URL:** `/schoolManagement/v1/student/studentCourses/:uid`
+  - **Método:** `GET`
+
+- **Actualizar cambios en perfil de estudiante**
+  - **URL:** `/schoolManagement/v1/student/updateStudent/:uid`
+  - **Método:** `POST`
+ - **Cuerpo:**
+    ```json
+    {
+      "name": "string",
+      "surname": "string",
+      "username": "string",
+      "password": "string",
+      "role": "string"
+    }
+    ```
+
+- **desactivar/eliminar cuenta de estudiante**
+  - **URL:** `/schoolManagement/v1/student/deleteStudentAccount/:uid`
+  - **Método:** `POST`
+
+  ### TEACHERS
+- **creacion de cursos**
+  - **URL:** `/schoolManagement/v1/teacher/createCourses`
+  - **Método:** `POST`
+  - **Cuerpo:**
+    ```json
+    {
+      "name": "string",
+      "teacher": "string",
+    }
+    ```
+
+- **Actualizar cursos**
+  - **URL:** `/schoolManagement/v1/teacher/updateCourses/:cid`
+  - **Método:** `PATCH`
+ - **Cuerpo:**
+    ```json
+    {
+      "name": "string"
+    }
+    ```
+
+- **desactivar/eliminar cuenta de estudiante**
+  - **URL:** `/schoolManagement/v1/teacher/deleteCourses/:cid`
+  - **Método:** `delete`

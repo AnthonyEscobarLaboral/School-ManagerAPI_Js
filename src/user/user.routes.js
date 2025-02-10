@@ -6,7 +6,7 @@ const router = Router()
 
 router.post("/assignCourses/:uid", assignCoursesStudentValidator, assignCoursesStudent)
 
-router.get("/studentCourses", studentCourses)
+router.get("/studentCourses/:uid", studentCourses)
 
 router.put("/updateStudent/:uid", updateStudentProfileValidator, updateStudentProfile)
 

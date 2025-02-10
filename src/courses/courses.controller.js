@@ -1,6 +1,5 @@
 'use strict';
-
-import User from "./user.model.js";
+import User from "../user/user.model.js";
 import Courses from "../courses/courses.model.js";
 
 export const newCourse = async (req, res) => {
