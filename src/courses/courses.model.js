@@ -4,7 +4,7 @@ const coursesSchema = Schema({
     name:{
         type: String,
         required: [true, "Name is required"],
-        maxLength: [16, "Name cannot contain more than 16 characters"]
+        maxLength: [20, "Name cannot contain more than 16 characters"]
     },
     status:{
         type: Boolean,

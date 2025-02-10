@@ -11,7 +11,6 @@ export const newCourseValidator = [
 
 export const editCoursesValidator = [
     param("cid", "This id is not valid").isMongoId(),
-    param("cid").custom(coursesExists),
     param("cid").custom(coursesFound),
     validationFields,
     handleErrors

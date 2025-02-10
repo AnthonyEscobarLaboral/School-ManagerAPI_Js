@@ -3,23 +3,33 @@ import User from "../user/user.model.js";
 import Courses from "../courses/courses.model.js";
 
 export const newCourse = async (req, res) => {
-    const { courseName, tid } = req.body;
+    const data = req.body;
 
     try {
-        const teacher = await User.findById(tid);
+        const teacher = await User.findById(data.teacher);
 
-        if (!teacher) {
+        if (teacher === null) {
             return res.status(404).json({
                 success: false,
                 message: 'Teacher id not found'
             });
         }
 
+        if (teacher.role === "STUDENT_ROLE") {
+            return res.status(401).json({
+                success: false,
+                message: 'Only teachers are allowed to create a course'
+            });
+        }
+
         const course = new Courses({
-            courseName,
-            teacher: tid,
+            ...data,
+            teacher: data.teacher,
         });
         await course.save();
+
+        teacher.courses.push(course._id);
+        await teacher.save();
 
         res.status(200).json({
             success: true,
@@ -35,13 +45,37 @@ export const newCourse = async (req, res) => {
     }
 };
 
+export const teacherCourses = async (req, res) => {
+    const { tid } = req.params
+
+    try {
+        const teacher = await User.findById(tid);
+        if (!teacher) {
+            return res.status(404).json({
+                success: false,
+                message: "teacher not found"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            teacher
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed getting teachers data',
+            error: err.message
+        });
+    }
+};
 
 export const editCourses = async (req, res) => {
     try {
         const { cid } = req.params;
-        const newName = req.body;
+        const { name } = req.body;
       
-        const course = await Courses.findByIdAndUpdate(cid, {name: newName}, { new: true });
+        const course = await Courses.findByIdAndUpdate(cid, {name: name}, { new: true });
+        
 
         res.status(200).json({
             success: true,
@@ -61,16 +95,7 @@ export const deleteCourses = async (req, res) => {
     try {
         const { cid } = req.params
 
-        const course = await course.findByIdAndUpdate(cid, { status: false }, { new: true })
-
-        await Promise.all(course.students.map(async (sid) => {
-          const studentsArray = await User.findById(sid);
-          const index = studentsArray.courses.indexOf(cid);
-          if (index !== -1) {
-            studentsArray.courses.splice(index, 1); //el metodo splice elimina el curso del estudiante 
-            await studentsArray.save(); 
-          }
-        }));
+        const course = await Courses.findByIdAndUpdate(cid, { status: false }, { new: true })
 
         return res.status(200).json({
             success: true,

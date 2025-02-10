@@ -28,7 +28,6 @@ export const loginValidator = [
 export const assignCoursesStudentValidator = [
     param("uid", "This id is not valid").isMongoId(),
     param("uid").custom(userExists),
-    param("cid", "This id is not valid").isMongoId(),
     validationFields,
     handleErrors
 ]

@@ -3,30 +3,33 @@ import Courses from "../courses/courses.model.js";
 
 export const assignCoursesStudent = async (req, res) => {
     const { uid } = req.params
-    const { cid } = req.body;
+    const { coursesRecived } = req.body;
     try {
+
         const user = await User.findById(uid);
-
-        if (user.courses.length >= 3) {
+        if (user.courses.length + coursesRecived.length > 3) {
             return res.status(400).json({
                 success: false,
-                message: 'Cannot assign more courses'
+                message: 'Cannot be assign to more courses'
             });
         }
-
-        if (user.courses.includes(cid)) {
-            return res.status(400).json({
-                success: false,
-                message: 'You are already assigned to this course'
-            });
+        for (const cid of coursesRecived) {
+            if (user.courses.includes(cid)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'You are already assigned to this course'
+                });
+            }
         }
 
-        user.courses.push(cid);
+        user.courses.push(...coursesRecived);
         await user.save();
 
-        const course = await Courses.findById(cid);
-        course.students.push(uid);
-        await course.save();
+        for (const cid of coursesRecived) {
+            const course = await Courses.findById(cid);
+            course.student.push(uid);
+            await course.save();
+        }
 
         res.status(200).json({
             success: true,
@@ -47,23 +50,21 @@ export const studentCourses = async (req, res) => {
     const { uid } = req.params
 
     try {
-        const user = await User.findById(uid).populate('Courses');
+        const user = await User.findById(uid);
         if (!user) {
             return res.status(404).json({
                 success: false,
                 message: "User not found"
             })
         }
-
         res.status(200).json({
             success: true,
-            total,
             user
         });
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Failed gettin users and their courses assigned',
+            message: 'Failed getting users and their courses assigned',
             error: err.message
         });
     }
