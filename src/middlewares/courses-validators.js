@@ -5,6 +5,7 @@ import { handleErrors } from "./handle-errors.js";
 
 export const newCourseValidator = [
     body("name").notEmpty().withMessage("name is required"),
+    body("name").custom(coursesExists),
     validationFields,
     handleErrors
 ]
