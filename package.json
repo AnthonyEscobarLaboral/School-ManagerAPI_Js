@@ -1,0 +1,36 @@
+{
+  "name": "school-managerapi_js",
+  "version": "1.0.0",
+  "description": "Esta API con solamente Backend está diseñada para la gestion y administración del control de alumnos de un centro educativo.\r ## Funciones especificas de esta API\r #### Funciones del alumno:\r 1. Puede registrarse como “STUDENT_ROLE” por defecto y logearse.\r 2. El alumno podrá asignarse a como máximo 3 cursos.\r 3. No podrá asignarse a un curso que ya se encuentra asignado.\r 4. Podrá visualizar a los cursos que se encuentra asignado.\r 5. Podrá editar y eliminar su perfil.\r 6. \r #### Funciones del maestro:\r 1. Puede registrarse como “TEACHER_ROLE” y logearse.\r 2. El profesor podrá crear, editar, eliminar y visualizar los cursos que el posea.\r 3. En el caso de editar un curso con alumnos asignados deberá modificarse también a los alumnos el\r curso.\r 4. En el caso de eliminar un curso con alumnos asignados se deberá desasignar a los alumnos el curso de\r forma automática.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyEscobarLaboral/School-ManagerAPI_Js.git"
+  },
+  "keywords": [],
+  "author": "Anthony Josue Escobar Ponce",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AnthonyEscobarLaboral/School-ManagerAPI_Js/issues"
+  },
+  "homepage": "https://github.com/AnthonyEscobarLaboral/School-ManagerAPI_Js#readme",
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.0",
+    "morgan": "^1.10.0",
+    "school-managerapi_js": "file:"
+  }
+}
