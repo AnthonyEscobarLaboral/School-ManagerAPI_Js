@@ -9,7 +9,6 @@ Esta API con solamente Backend está diseñada para la gestion y administración
 3. No podrá asignarse a un curso que ya se encuentra asignado.
 4. Podrá visualizar a los cursos que se encuentra asignado.
 5. Podrá editar y eliminar su perfil.
-6. 
 #### Funciones del maestro:
 1. Puede registrarse como “TEACHER_ROLE” y logearse.
 2. El profesor podrá crear, editar, eliminar y visualizar los cursos que el posea.
@@ -79,7 +78,7 @@ forma automática.
 - **Actualizar cambios en perfil de estudiante**
   - **URL:** `/schoolManagement/v1/student/updateStudent/:uid`
   - **Método:** `POST`
- - **Cuerpo:**
+  - **Cuerpo:**
     ```json
     {
       "name": "string",
@@ -105,11 +104,14 @@ forma automática.
       "teacher": "string",
     }
     ```
+- **Visualizar cursos por profesor**
+  - **URL:** `/schoolManagement/v1/teacher/teacherCourses/:tid`
+  - **Método:** `GET`
 
 - **Actualizar cursos**
   - **URL:** `/schoolManagement/v1/teacher/updateCourses/:cid`
   - **Método:** `PATCH`
- - **Cuerpo:**
+  - **Cuerpo:**
     ```json
     {
       "name": "string"
